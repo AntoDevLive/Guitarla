@@ -12,20 +12,21 @@ function App() {
   function addToCart(item) {
     const itemExists = cart.findIndex( guitar => guitar.id === item.id ); //cuando un elemento no existía aún en el array retorna -1
       if(itemExists >= 0) { //si retorna >= 0 significa que ya existía en el arreglo
-        const updateCart = [...cart];
-        updateCart[itemExists].cantidad++;
-        setCart(updateCart);
+        const updateCart = [...cart]; //hacemos una copia de cart para no mutarlo directamente
+        updateCart[itemExists].cantidad++;  //incrementamos la cantidad
+        setCart(updateCart); //aplicamos la mutación
       } else { // Agregamos el item por primera vez al array
         item.cantidad = 1; //Esto también agrega la propiedad "cantidad" al item
         setCart([...cart, item]);
-      }
-    
+      }  
   }
 
   return (
     <>
 
-      <Header /> {/*Renderizar el componente Header */}
+      <Header //Renderizar el componente Header */
+        cart={cart}
+      /> 
 
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
