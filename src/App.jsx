@@ -6,12 +6,25 @@ import { db } from "./data/db";
 
 function App() {
 
+  const initialCart = () => {
+    const localStorageCart = localStorage.getItem('cart');
+    return localStorageCart ? JSON.parse(localStorageCart) : [];
+  }
+
   const [data, setData] = useState(db);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(initialCart);
+
+  const MAX_ITEMS = 5;
+  const MIN_ITEMS = 1;
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
   function addToCart(item) {
     const itemExists = cart.findIndex( guitar => guitar.id === item.id ); //cuando un elemento no existía aún en el array retorna -1
       if(itemExists >= 0) { //si retorna >= 0 significa que ya existía en el arreglo
+        if(cart[itemExists].cantidad >= MAX_ITEMS) return;
         const updateCart = [...cart]; //hacemos una copia de cart para no mutarlo directamente
         updateCart[itemExists].cantidad++;  //incrementamos la cantidad
         setCart(updateCart); //aplicamos la mutación
@@ -19,6 +32,7 @@ function App() {
         item.cantidad = 1; //Esto también agrega la propiedad "cantidad" al item
         setCart([...cart, item]);
       }  
+
   }
 
   function removeFromCart(id) {
@@ -29,6 +43,32 @@ function App() {
     setCart([]);
   }
 
+  function IncreaseCant(id) {
+    const updatedCart = cart.map( item => {
+      if(item.id === id && item.cantidad < MAX_ITEMS) {
+        return {
+          ...item,
+          cantidad: item.cantidad + 1
+        }
+      }
+      return item;
+    });
+    setCart(updatedCart);
+  }
+
+  function decreaseCant(id) {
+    const updatedCart = cart.map(item => {
+      if(item.id === id && item.cantidad > MIN_ITEMS) {
+        return {
+          ...item,
+          cantidad: item.cantidad -1
+        }
+      }
+      return item;
+    });
+    setCart(updatedCart);
+  }
+
   return (
     <>
 
@@ -36,6 +76,8 @@ function App() {
         cart={cart}
         removeFromCart={removeFromCart}
         clearCart={clearCart}
+        IncreaseCant={IncreaseCant}
+        decreaseCant={decreaseCant}
       /> 
 
       <main className="container-xl mt-5">

@@ -1,6 +1,6 @@
 
 
-export default function Header({cart, removeFromCart, clearCart}) {
+export default function Header({ cart, removeFromCart, clearCart, IncreaseCant, decreaseCant }) {
 
     // State derivado
     const isEmpty = () => cart.length === 0;
@@ -15,14 +15,14 @@ export default function Header({cart, removeFromCart, clearCart}) {
                     <div className="row justify-content-center justify-content-md-between">
                         <div className="col-8 col-md-3">
                             <a href="index.html">
-                                <img className="img-fluid" src="./public/img/logo.svg" alt="imagen logo" />
+                                <img className="img-fluid" src="/img/logo.svg" alt="imagen logo" />
                             </a>
                         </div>
                         <nav className="col-md-6 a mt-5 d-flex align-items-start justify-content-end">
                             <div
                                 className="carrito"
                             >
-                                <img className="img-fluid" src="./public/img/carrito.png" alt="imagen carrito" />
+                                <img className="img-fluid" src="/img/carrito.png" alt="imagen carrito" />
 
                                 <div id="carrito" className="bg-white p-3">
                                     
@@ -52,6 +52,7 @@ export default function Header({cart, removeFromCart, clearCart}) {
                                                     <button
                                                         type="button"
                                                         className="btn btn-dark"
+                                                        onClick={() => decreaseCant(guitar.id)}
                                                     >
                                                         -
                                                     </button>
@@ -59,6 +60,7 @@ export default function Header({cart, removeFromCart, clearCart}) {
                                                     <button
                                                         type="button"
                                                         className="btn btn-dark"
+                                                        onClick={ () => IncreaseCant(guitar.id)}
                                                     >
                                                         +
                                                     </button>
