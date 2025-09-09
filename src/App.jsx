@@ -7,7 +7,20 @@ import { db } from "./data/db";
 function App() {
 
   const [data, setData] = useState(db);
+  const [cart, setCart] = useState([]);
 
+  function addToCart(item) {
+    const itemExists = cart.findIndex( guitar => guitar.id === item.id ); //cuando un elemento no existía aún en el array retorna -1
+      if(itemExists >= 0) { //si retorna >= 0 significa que ya existía en el arreglo
+        const updateCart = [...cart];
+        updateCart[itemExists].cantidad++;
+        setCart(updateCart);
+      } else { // Agregamos el item por primera vez al array
+        item.cantidad = 1; //Esto también agrega la propiedad "cantidad" al item
+        setCart([...cart, item]);
+      }
+    
+  }
 
   return (
     <>
@@ -22,6 +35,8 @@ function App() {
             <Guitar 
               key={guitar.id}
               guitar = {guitar}
+              addToCart = {addToCart}
+              setCart = {setCart}
             />
           ))}
           
