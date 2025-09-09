@@ -1,7 +1,6 @@
 
 
-
-export default function Header({cart}) {
+export default function Header({cart, removeFromCart, clearCart}) {
 
     // State derivado
     const isEmpty = () => cart.length === 0;
@@ -68,6 +67,7 @@ export default function Header({cart}) {
                                                     <button
                                                         className="btn btn-danger"
                                                         type="button"
+                                                        onClick={ () => removeFromCart(guitar.id)}
                                                     >
                                                         X
                                                     </button>
@@ -81,7 +81,7 @@ export default function Header({cart}) {
                                     <p className="text-end">Total pagar: <span className="fw-bold">${cartTotal()}</span></p>
                                     </>
                                     )}
-                                    <button className="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
+                                    <button onClick={clearCart} className="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
                                 </div>
                             </div>
                         </nav>

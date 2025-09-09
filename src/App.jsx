@@ -21,11 +21,21 @@ function App() {
       }  
   }
 
+  function removeFromCart(id) {
+    setCart( prevCart => prevCart.filter(guitar => guitar.id != id))
+  }
+
+  function clearCart() {
+    setCart([]);
+  }
+
   return (
     <>
 
       <Header //Renderizar el componente Header */
         cart={cart}
+        removeFromCart={removeFromCart}
+        clearCart={clearCart}
       /> 
 
       <main className="container-xl mt-5">
