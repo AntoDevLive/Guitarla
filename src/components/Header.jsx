@@ -1,10 +1,6 @@
 
 
-export default function Header({ cart, removeFromCart, clearCart, IncreaseCant, decreaseCant }) {
-
-    // State derivado
-    const isEmpty = () => cart.length === 0;
-    const cartTotal = () => cart.reduce((total, item) => total + (item.cantidad * item.price), 0)
+export default function Header({ cart, removeFromCart, clearCart, IncreaseCant, decreaseCant, isEmpty, cartTotal }) {
 
 
     return (
